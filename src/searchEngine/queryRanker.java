@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class queryRanker {
 
+	 static int []index = new int[10000];  
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		double[] s1 = new double[10000], s2 = new double[10000], s3 = new double[10000], s4 = new double[10000], s5 = new double[10000],
@@ -155,19 +156,44 @@ System.out.println("weight 4 : "+  " "+ q14 );
 	}
 	
 // Reordering the source files	
+    static int[] sort(double arr[])                //To store the indices while sorting the array.
+    {
+        int n = arr.length;
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (arr[j] > arr[j+1])
+                {
+                    // swap arr[j+1] and arr[i]
+                    double temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                    //Swap the indices at the same instance
+                    int tem = index[j];
+                    index[j] = index[j+1];
+                    index[j+1] = tem;
+                }
+        return index;
+    }
 
 	public static void reorder(double[] s11, double[] s12, double[] s13, double[] s14, double[] s15, int[] index) {
 		double[] temp1 = new double[10000], temp2 = new double[10000], temp3 = new double[10000], temp4 = new double[10000],
 				temp5 = new double[10000];
-
+		 for(int i = 0; i < 10000; i++)
+         {
+			 temp1[i] = s11[index[i]];
+			 temp2[i] = s12[index[i]];
+			 temp3[i] = s13[index[i]];
+			 temp4[i] = s14[index[i]];
+             temp5[i] = s15[index[i]];
+         }
 //		result[i] should be present at index[i] index
-		for (int i = 0; i < 10000; i++) {
-			temp1[index[i]] = s11[i];
-			temp2[index[i]] = s12[i];
-			temp3[index[i]] = s13[i];
-			temp4[index[i]] = s14[i];
-			temp5[index[i]] = s15[i];
-		}
+//		for (int i = 0; i < 10000; i++) {
+//			temp1[index[i]] = s11[i];
+//			temp2[index[i]] = s12[i];
+//			temp2[index[i]] = s13[i];
+//			temp4[index[i]] = s14[i];
+//			temp5[index[i]] = s15[i];
+//		}
 
 //		Copy temp[] to s[]
 		for (int i = 0; i < 10000; i++) {
